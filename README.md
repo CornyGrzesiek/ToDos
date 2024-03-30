@@ -1,4 +1,7 @@
 Knockoff of listonic 
 
+Screenshots of program:
 
-![image](https://github.com/CornyGrzesiek/ToDos/assets/128638079/96546cfa-5d69-4c49-97d5-94981186012c)
+
+![image](https://github.com/CornyGrzesiek/ToDos/assets/128638079/cbbe92f7-52e2-4edc-bd7f-012f41545950)
+

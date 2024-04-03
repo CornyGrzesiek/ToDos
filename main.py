@@ -23,14 +23,6 @@ items_scroll.pack(side=RIGHT, fill=BOTH)
 items_list.config(yscrollcommand=items_scroll.set)
 items_scroll.config(command=items_list.yview)
 
-# Create entryBox
-entry_box = Entry(root, font=("Helvetica", 12))
-entry_box.pack(pady=20)
-
-# Create buttonFrame
-button_frame = Frame(root)
-button_frame.pack(pady=20)
-
 # Save to file
 array_of_items = []
 
@@ -42,7 +34,31 @@ for line in lines:
     array_of_items.append(line.strip())
 
 
-# Functions
+# Create entryBox
+def on_entry_click(event):
+    if entry_box.get() == "Enter your text here":
+        entry_box.delete(0, END)
+        entry_box.config(fg="black")
+
+
+def on_focus_out(event):
+    if not entry_box.get():
+        entry_box.config(fg="gray")
+        entry_box.insert(0, 'Enter your text here')
+
+
+def done_item():
+    selected_index = items_list.curselection()
+    if selected_index:
+        items_list.itemconfig(selected_index, bg="green", fg="white")
+
+
+def to_do():
+    selected_index = items_list.curselection()
+    if selected_index:
+        items_list.itemconfig(selected_index, bg="white", fg="black")
+
+
 def delete_item():
     selected_item = items_list.get(ANCHOR)
     array_of_items.remove(selected_item)
@@ -53,19 +69,38 @@ def delete_item():
 
 
 def add_item():
-    items_list.insert(END, entry_box.get())
-    array_of_items.append(entry_box.get())
-    entry_box.delete(0, END)
-    with open("todos", "w") as file:
-        for item in array_of_items:
-            file.write(item + "\n")
+    if not entry_box.get().strip() or entry_box.get() == "Enter your text here":
+        entry_box.delete(0, END)
+    else:
+        items_list.insert(END, entry_box.get())
+        array_of_items.append(entry_box.get())
+        entry_box.delete(0, END)
+        with open("todos", "w") as file:
+            for item in array_of_items:
+                file.write(item + "\n")
+
+
+entry_box = Entry(root,  font=("Helvetica", 12))
+entry_box.insert(0, 'Enter your text here')
+entry_box.config(fg="gray")
+entry_box.bind('<FocusIn>', on_entry_click)
+entry_box.bind('<FocusOut>', on_focus_out)
+entry_box.pack(pady=20)
+
+# Create buttonFrame
+button_frame = Frame(root)
+button_frame.pack(pady=20)
 
 
 # Add buttons
 delete_button = Button(button_frame, text="Delete Item", command=delete_item)
 add_button = Button(button_frame, text="Add Item", command=add_item)
+done_button = Button(button_frame, text="Done", command=done_item, bg="light green", fg="black")
+to_do_button = Button(button_frame, text="To Do", bg="red", command=to_do)
 
 delete_button.grid(row=0, column=0)
 add_button.grid(row=0, column=1, padx=20)
+done_button.grid(row=0, column=2)
+to_do_button.grid(row=0, column=3, padx=20)
 
 root.mainloop()

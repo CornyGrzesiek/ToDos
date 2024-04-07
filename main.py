@@ -34,7 +34,6 @@ for line in lines:
     array_of_items.append(line.strip())
 
 
-# Create entryBox
 def on_entry_click(event):
     if entry_box.get() == "Enter your text here":
         entry_box.delete(0, END)
@@ -61,8 +60,11 @@ def to_do():
 
 def delete_item():
     selected_item = items_list.get(ANCHOR)
-    array_of_items.remove(selected_item)
-    items_list.delete(ANCHOR)
+    if selected_item not in array_of_items:
+        print("lol")
+    else:
+        array_of_items.remove(selected_item)
+        items_list.delete(ANCHOR)
     with open("todos", "w") as file:
         for item in array_of_items:
             file.write(item + "\n")
@@ -80,6 +82,7 @@ def add_item():
                 file.write(item + "\n")
 
 
+# Create entry box
 entry_box = Entry(root,  font=("Helvetica", 12))
 entry_box.insert(0, 'Enter your text here')
 entry_box.config(fg="gray")
@@ -93,10 +96,10 @@ button_frame.pack(pady=20)
 
 
 # Add buttons
-delete_button = Button(button_frame, text="Delete Item", command=delete_item)
-add_button = Button(button_frame, text="Add Item", command=add_item)
-done_button = Button(button_frame, text="Done", command=done_item, bg="light green", fg="black")
-to_do_button = Button(button_frame, text="To Do", bg="red", command=to_do)
+delete_button = Button(button_frame, text="Delete Item", command=delete_item, width=10, bg="light gray")
+add_button = Button(button_frame, text="Add Item", command=add_item, width=10, bg="light gray")
+done_button = Button(button_frame, text="Done", command=done_item, bg="light green", fg="black", width=10)
+to_do_button = Button(button_frame, text="To Do", command=to_do, width=10, bg="light gray")
 
 delete_button.grid(row=0, column=0)
 add_button.grid(row=0, column=1, padx=20)

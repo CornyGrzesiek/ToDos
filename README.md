@@ -13,4 +13,5 @@ after deleting todo and reopening the app:
 
 update:
 
-![image](https://github.com/CornyGrzesiek/ToDos/assets/128638079/d3496014-5cd0-4870-bdfa-9cb2c830a6f2)
+![image](https://github.com/norbik2004/ToDos/assets/128638079/318bc6a3-7089-4e95-b567-ea47e85533c0)
+
